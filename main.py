@@ -161,7 +161,7 @@ async def calculate_solar_system(input_data: SolarCalculationInput) -> SolarCalc
     battery_ah = energy_wh_adjusted / battery_voltage
 
     # Calculate inverter size (with 25% headroom for surge capacity)
-    inverter_watts = load * 1.25
+    inverter_watts = round(((load * 2) / 0.8) / 1000, 1)
 
     # Calculate solar array size using adjusted energy
     solar_watts = energy_wh_adjusted / charging_hours
