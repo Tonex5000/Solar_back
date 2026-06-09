@@ -161,7 +161,7 @@ async def calculate_solar_system(input_data: SolarCalculationInput) -> SolarCalc
     battery_ah = energy_wh_adjusted / battery_voltage
 
     # Calculate inverter size (with 25% headroom for surge capacity)
-    inverter_watts = round(((load * 2) / 0.8) / 1000, 1)
+    inverter_watts = ((load * 2) / 0.8) / 1000
 
     # Calculate solar array size using adjusted energy
     solar_watts = energy_wh_adjusted / charging_hours
@@ -176,7 +176,7 @@ async def calculate_solar_system(input_data: SolarCalculationInput) -> SolarCalc
     battery_count = ceil(energy_wh_adjusted / single_battery_wh)
 
     return SolarCalculationOutput(
-        inverter_watts= inverter_watts,
+        inverter_watts= round(inverter_watts, 1),
         battery_ah=round(battery_ah, 2),
         solar_watts=round(solar_watts, 2),
         number_of_panels=number_of_panels,
