@@ -176,7 +176,7 @@ async def calculate_solar_system(input_data: SolarCalculationInput) -> SolarCalc
     battery_count = ceil(energy_wh_adjusted / single_battery_wh)
 
     return SolarCalculationOutput(
-        inverter_watts=round(inverter_watts),
+        inverter_watts= inverter_watts,
         battery_ah=round(battery_ah, 2),
         solar_watts=round(solar_watts, 2),
         number_of_panels=number_of_panels,
