@@ -64,7 +64,7 @@ class SolarCalculationInput(BaseModel):
 class SolarCalculationOutput(BaseModel):
     """Output model for solar system sizing calculation."""
 
-    inverter_watts: int = Field(
+    inverter_watts: float = Field(
         ...,
         ge=0,
         description="Required inverter size in watts",
