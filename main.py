@@ -34,6 +34,13 @@ class SolarCalculationInput(BaseModel):
         description="Number of hours the system should run (1-12)",
         examples=[4, 8, 12],
     )
+    battery_eff: float = Field(
+        ...,
+        ge=0.75,
+        le=1,
+        description="Tells us the efficiency of the battery",
+        examples=[0.75, 0.8, 0.9, 1],
+    )
     battery_voltage: Literal[12, 24, 48] = Field(
         ...,
         description="System voltage (12, 24, or 48)",
@@ -140,6 +147,7 @@ async def calculate_solar_system(input_data: SolarCalculationInput) -> SolarCalc
     # Extract validated inputs
     load = input_data.load
     backup_hours = input_data.backup_hours
+    battery_eff = input_data.battery_eff
     battery_voltage = input_data.battery_voltage
     charging_hours = input_data.charging_hours
     panel_wattage = input_data.panel_wattage
@@ -158,7 +166,7 @@ async def calculate_solar_system(input_data: SolarCalculationInput) -> SolarCalc
     energy_wh_adjusted = energy_wh * SYSTEM_LOSS_FACTOR
 
     # Calculate battery capacity (Ah)
-    battery_ah = energy_wh_adjusted / battery_voltage
+    battery_ah = (energy_wh_adjusted / battery_eff) / battery_voltage
 
     # Calculate inverter size (with 25% headroom for surge capacity)
     inverter_watts = ((load * 2) / 0.8) / 1000
