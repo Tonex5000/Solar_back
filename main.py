@@ -163,10 +163,10 @@ async def calculate_solar_system(input_data: SolarCalculationInput) -> SolarCalc
     energy_wh = load * backup_hours
 
     # Apply 20% system loss
-    energy_wh_adjusted = energy_wh * SYSTEM_LOSS_FACTOR
+    energy_wh_adjusted = energy_wh * 0.8
 
     # Calculate battery capacity (Ah)
-    battery_ah = (energy_wh_adjusted / battery_eff)
+    battery_ah = ceil((energy_wh / 0.8)/1000)
 
     # Calculate inverter size (with 25% headroom for surge capacity)
     inverter_watts = ((load * 2) / 0.8) / 1000
